@@ -1,0 +1,7 @@
+{
+    "name": "hounddog/HdTwitter",
+    "description": "Twitter API",
+    "require": {
+        "php": ">=5.3.0"
+    },
+}
