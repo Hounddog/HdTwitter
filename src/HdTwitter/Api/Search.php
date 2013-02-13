@@ -19,7 +19,8 @@ class Search extends AbstractApi
         $params = array(
             'q' => $searchParams,
             'include_entities' => 'true',
-            'result_type' => 'mixed'
+            'result_type' => 'mixed',
+            'rpp' => '100'
         );
         $collection = new RepositoryCollection($httpClient, 'search.json', $params);
         return $collection;
