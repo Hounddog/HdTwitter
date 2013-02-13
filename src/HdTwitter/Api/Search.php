@@ -16,7 +16,11 @@ class Search extends AbstractApi
     public function show($searchParams)
     {
         $httpClient =$this->getClient()->getHttpClient();
-        $params = array('q' => $searchParams);
+        $params = array(
+            'q' => $searchParams,
+            'include_entities' => 'true',
+            'result_type' => 'mixed'
+        );
         $collection = new RepositoryCollection($httpClient, 'search.json', $params);
         return $collection;
     }
