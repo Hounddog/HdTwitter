@@ -13,15 +13,17 @@ class Search extends AbstractApi
      *
      * @return array
      */
-    public function show($searchParams)
+    public function show($searchParams, $max_id = null)
     {
         $httpClient =$this->getClient()->getHttpClient();
         $params = array(
             'q' => $searchParams,
-            'include_entities' => 'true',
-            'result_type' => 'mixed',
-            'rpp' => '100'
+            'include_entities' => 'true'
         );
+        if($max_id) {
+            $params['max_id']=$max_id;
+            $params['rpp'] = 100;
+        }
         $collection = new RepositoryCollection($httpClient, 'search.json', $params);
         return $collection;
     }

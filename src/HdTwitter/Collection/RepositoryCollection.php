@@ -42,8 +42,8 @@ class RepositoryCollection implements Iterator
             $this->httpClient = $httpClient;
             $this->path = $path;
             $this->headers = $headers;
-            if(!isset($parameters['per_page'])) {
-                $parameters['per_page'] = 30;;
+            if(!isset($parameters['rpp'])) {
+                $parameters['rpp'] = 5;
             }
 
             if(!isset($parameters['page'])) {
@@ -59,18 +59,18 @@ class RepositoryCollection implements Iterator
 
     private function loadPage($page)
     {
-        if($this->pagination != null && $page > $this->pagination['last']) {
+        /*if($this->pagination != null && $this->pagination['last']) {
             return false;
-        }
+        }*/
 
         $elements = $this->fetch();
-        $elements = $elements->results;
 
+        $elements = $elements->results;
         if(count($elements) == 0) {
             return false;
         }
 
-        $offset = (($page-1) * $this->parameters['per_page']);
+        $offset = (($page-1) * $this->parameters['rpp']);
 
         foreach($elements as $element) {
             $this->add($offset++, $element);
@@ -82,16 +82,17 @@ class RepositoryCollection implements Iterator
     private function fetch()
     {
         $response = $this->httpClient->get($this->path, $this->parameters, $this->headers);
-        $this->getPagination($response);
+
         $elements = json_decode($response->getBody());
+        $this->getPagination($elements);
         return $elements;
     }
 
     public function page($page)
     {
-        $this->parameters['per_page'] = $this->parameters['per_page'];
-        $offsetStart = (($page-1) * $this->parameters['per_page']);
-        $limit = $this->parameters['per_page'] -1;
+        $this->parameters['rpp'] = $this->parameters['rpp'];
+        $offsetStart = (($page-1) * $this->parameters['rpp']);
+        $limit = $this->parameters['rpp'] -1;
         $elements = array();
 
         for($offset=$offsetStart,$i=0;$i<=$limit; $i++, $offset++){
@@ -121,7 +122,10 @@ class RepositoryCollection implements Iterator
 
     private function getPagination($response)
     {
-        $this->pagination['last'] = 1;
+        if($response->next_page) {
+            $this->pagination['next'] = $response->next_page;
+        }
+        /*$this->pagination['last'] = 1;
         $headers = $response->getHeaders();
         if($headers->has('Link')) {
             $header = $headers->get('Link')->getFieldValue();
@@ -143,6 +147,7 @@ class RepositoryCollection implements Iterator
                 $this->pagination['last'] = $query['page'];
             }
         }
+        */
     }
 
     public function rewind()
@@ -180,7 +185,6 @@ class RepositoryCollection implements Iterator
      */
     public function next()
     {
-
         return next($this->elements);
     }
 
@@ -193,7 +197,7 @@ class RepositoryCollection implements Iterator
     {
         $this->rewind();
         $this->parameters['page'] = 1;
-        $this->parameters['per_page'] = 100;
+        $this->parameters['rpp'] = 30;
 
         return $this;
     }
