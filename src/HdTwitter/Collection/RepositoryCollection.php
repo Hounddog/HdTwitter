@@ -122,7 +122,7 @@ class RepositoryCollection implements Iterator
 
     private function getPagination($response)
     {
-        if($response->next_page) {
+        if(isset($response->next_page)) {
             $this->pagination['next'] = $response->next_page;
         }
         /*$this->pagination['last'] = 1;
