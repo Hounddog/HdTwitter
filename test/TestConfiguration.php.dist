@@ -1,0 +1,7 @@
+<?php
+return array(
+    'modules' => array(
+        'HD\Api\Client',
+        'HD\Twitter',
+    ),
+);
