@@ -21,61 +21,9 @@ class OAuth extends AbstractAuthListener
      */
     public function preSend(Event $e)
     {
-        /*echo 'oauth';
-        var_dump($this->options);
-        exit;
-
-        $validator = new NotEmpty();
-
-        if (!isset($this->options['tokenOrLogin'], $this->options['password'])
-            || !$validator->isValid($this->options['tokenOrLogin'])
-            || !$validator->isValid($this->options['password'])
-        ) {
-            throw new Exception\InvalidArgumentException('You need to set username with password!');
-        }
-        */
-
-        $options = array(
-            'consumer_key' => 'a4870PMU1wAmynejYOD4qRlqe',
-            'consumer_secret' => 'oRhgQKtmu14hiRAtkSVAmSimqy0MQqmKJ8BwZXtFYB8Bx3rNFM',
-            'access_token_key' => '543645583-dX1qnp8s3ZDAvqcMpO9PS2UarKfFO0Nrw6vXLc4u',
-            'access_token_secret' => 'NVhF03BdfKGvBXPYf1ycknvSU43W4fwRucJNWGVKJwLJW'
-        );
-
-        $this->options = $options;
-
         $this->request = $e->getTarget();
-
-        //$this->method = $request->getMethod();
-        
-        //var_dump($request);
-        //exit;
-
-        //$uri = $request->getUri();
-        //echo $uri;
-        //var_dump($request);
-        //exit;
-
         $headers = $this->request->getHeaders();
-
-
-
-
-        //$nonce = md5(substr(microtime() . uniqid(), 0, 12));
-       /* $oauth = array(
-            'realm' => '',
-            'oauth_consumer_key' => 'a4870PMU1wAmynejYOD4qRlqe',
-            'oauth_token' => '543645583-dX1qnp8s3ZDAvqcMpO9PS2UarKfFO0Nrw6vXLc4u',
-            'oauth_signature_method' => 'HMAC-SHA1',
-            'oauth_timestamp' => time(),
-            'oauth_nonce' => $nonce,
-            'oauth_version' => '1.0',
-            'oauth_signature' => 'Q62sHqlkeADdcppiqnRlOsdls%2BQ%3D',
-        );*/
-
-
         $params = array(
-           // 'Authorization' =>'OAuth ' . implode(', ', $oauth),//implode oauth here
             'Authorization' =>'OAuth ' . $this->getOauthString(),
         );
         $headers->addHeaders($params);
@@ -119,8 +67,6 @@ class OAuth extends AbstractAuthListener
 
         return trim($r, '&');
     }
-
-
 
     /**
      * Converting all parameters arrays to a single string with encoded values
@@ -197,5 +143,4 @@ class OAuth extends AbstractAuthListener
 
         return $oauth;
     }
-
 }

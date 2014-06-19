@@ -6,7 +6,8 @@ use HD\API\Client\Http\Client;
 use HD\Twitter\Api\Model\Repo as RepoModel;
 use Zend\Stdlib\Hydrator;
 
-use Closure, Iterator;
+use Closure;
+use Iterator;
 
 class RepositoryCollection implements Iterator
 {
@@ -39,16 +40,16 @@ class RepositoryCollection implements Iterator
 
     protected $page = 1;
 
-    public function __construct(Client $httpClient, $path, array $parameters =array(), array $headers = array())
+    public function __construct(Client $httpClient, $path, array $parameters = array(), array $headers = array())
     {
-            $this->httpClient = $httpClient;
-            $this->path = $path;
-            $this->headers = $headers;
-            if(!isset($parameters['count'])) {
-                $parameters['count'] = 100;
-            }
+        $this->httpClient = $httpClient;
+        $this->path = $path;
+        $this->headers = $headers;
+        if (!isset($parameters['count'])) {
+            $parameters['count'] = 100;
+        }
 
-            $this->parameters = $parameters;
+        $this->parameters = $parameters;
     }
 
     public function setHttpClient($httpClient)
@@ -58,7 +59,7 @@ class RepositoryCollection implements Iterator
 
     private function loadPage()
     {
-        if(array_key_exists('max_id', $this->parameters) && null == $this->parameters['max_id']) {
+        if (array_key_exists('max_id', $this->parameters) && null == $this->parameters['max_id']) {
             return false;
         }
 
@@ -66,13 +67,13 @@ class RepositoryCollection implements Iterator
 
         $elements = $elements->statuses;
 
-        if(count($elements) == 0) {
+        if (count($elements) == 0) {
             return false;
         }
 
         $offset = (($this->page-1) * $this->parameters['count']);
 
-        foreach($elements as $element) {
+        foreach ($elements as $element) {
             $this->add($offset++, $element);
         }
 
@@ -95,10 +96,10 @@ class RepositoryCollection implements Iterator
         $limit = $this->parameters['count'] -1;
         $elements = array();
 
-        for($offset=$offsetStart,$i=0;$i<=$limit; $i++, $offset++){
-            if(!$this->containsKey($offset)) {
-                if($this->loadPage($page)) {
-                    if($this->containsKey($offset)) {
+        for ($offset=$offsetStart,$i=0; $i<=$limit; $i++, $offset++) {
+            if (!$this->containsKey($offset)) {
+                if ($this->loadPage($page)) {
+                    if ($this->containsKey($offset)) {
                         $elements[] = $this->get($offset);
                     } else {
                         break;
@@ -106,7 +107,7 @@ class RepositoryCollection implements Iterator
                 } else {
                     break;
                 }
-            } else  {
+            } else {
                 $elements[] = $this->get($offset);
             }
         }
@@ -124,8 +125,8 @@ class RepositoryCollection implements Iterator
         $metadata = $response->search_metadata;
         $this->parameters['max_id'] = null;
 
-        if(isset($metadata->next_results)) {
-            parse_str(ltrim($metadata->next_results, '?'), $this->parameters);   
+        if (isset($metadata->next_results)) {
+            parse_str(ltrim($metadata->next_results, '?'), $this->parameters);
         }
     }
 
@@ -182,7 +183,7 @@ class RepositoryCollection implements Iterator
 
     public function valid()
     {
-        if(!$this->current()) {
+        if (!$this->current()) {
             $valid = $this->loadPage();
             return $valid;
         }
@@ -208,7 +209,7 @@ class RepositoryCollection implements Iterator
     {
         $key = $this->indexOf($element);
 
-        if($key) {
+        if ($key) {
             unset($this->elements[$key]);
             return true;
         }
