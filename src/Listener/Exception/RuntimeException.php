@@ -1,6 +1,6 @@
 <?php
 
-namespace HdTwitter\Listener\Exception;
+namespace HD\Twitter\Listener\Exception;
 
 class RuntimeException extends \RuntimeException implements ExceptionInterface
 {

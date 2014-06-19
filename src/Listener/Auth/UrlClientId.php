@@ -1,9 +1,10 @@
 <?php
 
-namespace EdpGithub\Listener\Auth;
+namespace HD\Twitter\Listener\Auth;
 
 use Zend\EventManager\Event;
 use Zend\Validator\NotEmpty;
+use HD\Api\Client\Listener\Auth\AbstractAuthListener;
 
 class UrlClientId extends AbstractAuthListener
 {
@@ -16,8 +17,7 @@ class UrlClientId extends AbstractAuthListener
     {
         $validator = new NotEmpty();
 
-        if (
-            !isset($this->options['tokenOrLogin'], $this->options['password'])
+        if (!isset($this->options['tokenOrLogin'], $this->options['password'])
             || !$validator->isValid($this->options['tokenOrLogin'])
             || !$validator->isValid($this->options['password'])
         ) {

@@ -2,15 +2,17 @@
 return array(
     'service_manager' => array(
         'invokables' => array(
-            'HdTwitter\Client'      => 'HdTwitter\Client',
-            'HdTwitter\Api\Search' => 'HdTwitter\Api\Search',
-
-            'HdTwitter\Listener\Auth\HttpPassword' => 'HdTwitter\Listener\Auth\HttpPassword',
-            'HdTwitter\Listener\Auth\HttpToken' => 'HdTwitter\Listener\Auth\HttpToken',
-            'HdTwitter\Listener\Auth\UrlClientId' => 'HdTwitter\Listener\Auth\UrlClientId',
-            'HdTwitter\Listener\Auth\UrlToken' => 'HdTwitter\Listener\Auth\UrlToken',
-            'HdTwitter\Listener\Error' => 'HdTwitter\Listener\Error',
-            'HdTwitter\HttpClient' => 'HdTwitter\Http\Client',
+            'HD\Twitter\Api\Search' => 'HD\Twitter\Api\Search',
+            'HD\Twitter\Listener\Auth\UrlClientId' => 'HD\Twitter\Listener\Auth\UrlClientId',
+            'HD\Twitter\Listener\Error' => 'HD\Twitter\Listener\Error',
+            'HD\Twitter\Listener\Auth\OAuth' => 'HD\Twitter\Listener\Auth\OAuth',
         ),
+    ),
+    'hd-twitter' => array(
+        'options' => array(
+            'base_url' => 'https://api.twitter.com/',
+            'api_version' => '1.1',
+            'timeout'     => 10,
+        )
     ),
 );

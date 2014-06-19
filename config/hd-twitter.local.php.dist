@@ -1,0 +1,33 @@
+<?php
+/**
+ * HD\Twitter Configuration
+ *
+ * If you have a ./config/autoload/ directory set up for your project, you can
+ * drop this config file in it and change the values as you wish.
+ */
+$settings = array(
+    /**
+     * Twitter Client ID
+     *
+     * Upon registering your application with Instagram, they will give you a
+     * Client ID. Put that Client ID here. If you have not registered your
+     * application with Instagram yet, visit http://instagram.com/developer/clients/manage/
+     */
+    //'twitter_client_id' => 'Twitter_CLIENT_ID_GOES_HERE',
+
+    /**
+     * Twitter Client Secret
+     *
+     * Upon registering your application with Instagram, they will give you a
+     * Client Secret. Put that Client Secret here. If you have not registered your
+     * application with Instagram yet, visit http://instagram.com/developer/clients/manage/
+     */
+    //'twitter_client_secret' => 'Twitter_CLIENT_SECRET_GOES_HERE',
+);
+
+/**
+ * You do not need to edit below this line
+ */
+return array(
+    'hd-twitter' => $settings,
+);

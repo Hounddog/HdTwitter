@@ -1,6 +1,6 @@
 <?php
 
-namespace HdTwitter\Listener;
+namespace HD\Twitter\Listener;
 
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\EventManagerInterface;
